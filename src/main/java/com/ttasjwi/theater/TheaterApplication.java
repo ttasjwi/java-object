@@ -11,7 +11,7 @@ public class TheaterApplication {
 
     public static void main(String[] args) {
 
-        // 극장
+        // 극장 초기화
         List<Ticket> tickets = IntStream.range(0, 100)
                 .mapToObj(i -> new Ticket(10000))
                 .collect(Collectors.toList());
@@ -25,21 +25,21 @@ public class TheaterApplication {
         Bag bag1 = new Bag(invitation, 0);
         Audience audience1 = new Audience(bag1);
 
-        System.out.println("[audience1] [입장 전] 티켓 보유 여부 ? :  "+audience1.getBag().hasTicket());
+        System.out.println("[audience1] [입장 전] 티켓 보유 여부 ? :  "+bag1.hasTicket());
 
         theater.enter(audience1);
-        System.out.println("[audience1] [인장 후] 티켓 보유 여부 ? : "+audience1.getBag().hasTicket());
+        System.out.println("[audience1] [인장 후] 티켓 보유 여부 ? : "+bag1.hasTicket());
 
         System.out.println("============================================================================");
 
         // 초대장이 있는 손님
         Bag bag2 = new Bag(30000);
         Audience audience2 = new Audience(bag2);
-        System.out.println("[audience2] [입장 전] 티켓 보유여부 ? : "+audience2.getBag().hasTicket());
+        System.out.println("[audience2] [입장 전] 티켓 보유여부 ? : "+bag2.hasTicket());
 
         theater.enter(audience2);
-        System.out.println("[audience2] [입장 후] 티켓 보유여부 ? : "+audience2.getBag().hasTicket());
-        System.out.println("[audience2] [입장 후] 보유 금액 ? :  "+audience2.getBag().getAmount());
+        System.out.println("[audience2] [입장 후] 티켓 보유여부 ? : "+bag2.hasTicket());
+        System.out.println("[audience2] [입장 후] 보유 금액 ? :  "+bag2.getAmount());
         System.out.println("Count of Ticket : "+ tickets.size());
     }
 }
