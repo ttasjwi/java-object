@@ -12,4 +12,11 @@ public class Invitation {
     public Invitation(LocalDateTime when) {
         this.when = when;
     }
+
+    @Override
+    public String toString() {
+        return "Invitation{" +
+                "when=" + when +
+                '}';
+    }
 }

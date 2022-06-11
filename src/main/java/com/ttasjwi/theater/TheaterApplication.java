@@ -25,21 +25,20 @@ public class TheaterApplication {
         Bag bag1 = new Bag(invitation, 0);
         Audience audience1 = new Audience(bag1);
 
-        System.out.println("[audience1] [입장 전] 티켓 보유 여부 ? :  "+bag1.hasTicket());
+        System.out.println("[audience1] [입장 전] 가방상태 :  "+bag1);
 
         theater.enter(audience1);
-        System.out.println("[audience1] [인장 후] 티켓 보유 여부 ? : "+bag1.hasTicket());
+        System.out.println("[audience1] [입장 후] 가방상태 : "+bag1);
 
         System.out.println("============================================================================");
 
         // 초대장이 있는 손님
         Bag bag2 = new Bag(30000);
         Audience audience2 = new Audience(bag2);
-        System.out.println("[audience2] [입장 전] 티켓 보유여부 ? : "+bag2.hasTicket());
+        System.out.println("[audience2] [입장 전] 가방상태 : "+bag2);
 
         theater.enter(audience2);
-        System.out.println("[audience2] [입장 후] 티켓 보유여부 ? : "+bag2.hasTicket());
-        System.out.println("[audience2] [입장 후] 보유 금액 ? :  "+bag2.getAmount());
+        System.out.println("[audience2] [입장 후] 가방상태 :  "+bag2);
         System.out.println("Count of Ticket : "+ tickets.size());
     }
 }
