@@ -12,8 +12,6 @@ public class TicketSeller {
      * 관람객에게 티켓을 판매
      */
     public void sellTo(Audience audience) {
-        Ticket ticket = ticketOffice.getTicket();
-        Long fee = audience.buy(ticket);
-        ticketOffice.plusAmount(fee);
+        ticketOffice.sellTicketTo(audience);
     }
 }
