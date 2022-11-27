@@ -8,12 +8,11 @@ public class TicketSeller {
         this.ticketOffice = ticketOffice;
     }
 
+    /**
+     * 아래 코드는 트레이드 오프 후 step02로 되돌려야한다.
+     */
     public void sellTo(Audience audience) {
-        Ticket ticket = ticketOffice.getTicket();
-
-        Long amount = audience.buy(ticket);
-
-        ticketOffice.plusAmount(amount);
+        ticketOffice.sellTicketTo(audience);
     }
 
 }
