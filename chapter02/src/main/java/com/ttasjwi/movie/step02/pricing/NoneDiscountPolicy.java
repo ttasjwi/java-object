@@ -4,11 +4,10 @@ import com.ttasjwi.money.Money;
 import com.ttasjwi.movie.step02.DiscountPolicy;
 import com.ttasjwi.movie.step02.Screening;
 
-public class NoneDiscountPolicy extends DiscountPolicy {
+public class NoneDiscountPolicy implements DiscountPolicy {
 
     @Override
-    protected Money getDiscountAmount(Screening screening) {
+    public Money calculateDiscountAmount(Screening screening) {
         return Money.ZERO;
     }
-
 }
