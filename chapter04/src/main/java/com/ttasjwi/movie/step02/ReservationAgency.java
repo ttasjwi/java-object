@@ -11,11 +11,9 @@ public class ReservationAgency {
 
         for (DiscountCondition condition : movie.getDiscountConditions()) {
             if (condition.getType() == DiscountConditionType.PERIOD) {
-                discountable = screening.getWhenScreened().getDayOfWeek().equals(condition.getDayOfWeek()) &&
-                        condition.getStartTime().compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
-                        condition.getEndTime().compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
+                discountable = condition.isDiscountable(condition.getDayOfWeek(), screening.getWhenScreened().toLocalTime());
             } else {
-                discountable = condition.getSequence() == screening.getSequence();
+                discountable = condition.isDiscountable(screening.getSequence());
             }
 
             if (discountable) {
