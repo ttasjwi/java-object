@@ -24,14 +24,11 @@ public class ReservationAgency {
         Money fee;
 
         if (discountable) {
-            Money discountAmount = switch (movie.getMovieType()) {
-                case AMOUNT_DISCOUNT -> movie.getDiscountAmount();
-                case PERCENT_DISCOUNT -> movie.getFee().times(movie.getDiscountPercent());
-                case NONE_DISCOUNT -> Money.ZERO;
+            fee = switch (movie.getMovieType()) {
+                case AMOUNT_DISCOUNT -> movie.calculateAmountDiscountedFee();
+                case PERCENT_DISCOUNT -> movie.calculatePercentDiscountedFee();
+                case NONE_DISCOUNT -> movie.calculateNoneDiscountedFee();
             };
-
-            fee = movie.getFee().minus(discountAmount);
-
         } else {
             fee = movie.getFee();
         }
