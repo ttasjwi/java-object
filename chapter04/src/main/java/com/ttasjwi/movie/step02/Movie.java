@@ -3,6 +3,7 @@ package com.ttasjwi.movie.step02;
 import com.ttasjwi.money.Money;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Movie {
@@ -15,6 +16,21 @@ public class Movie {
     private MovieType movieType;
     private Money discountAmount;
     private double discountPercent;
+
+    public boolean isDiscountable(LocalDateTime whenScreened, int sequence) {
+        for (DiscountCondition condition : discountConditions) {
+            if (condition.getType() == DiscountConditionType.PERIOD) {
+                if (condition.isDiscountable(condition.getDayOfWeek(), whenScreened.toLocalTime())) {
+                    return true;
+                }
+            } else {
+                if (condition.isDiscountable(sequence)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public Money calculateAmountDiscountedFee() {
         if (movieType != MovieType.AMOUNT_DISCOUNT) {

@@ -7,19 +7,7 @@ public class ReservationAgency {
     public Reservation reserve(Screening screening, Customer customer, int audienceCount) {
         Movie movie = screening.getMovie();
 
-        boolean discountable = false;
-
-        for (DiscountCondition condition : movie.getDiscountConditions()) {
-            if (condition.getType() == DiscountConditionType.PERIOD) {
-                discountable = condition.isDiscountable(condition.getDayOfWeek(), screening.getWhenScreened().toLocalTime());
-            } else {
-                discountable = condition.isDiscountable(screening.getSequence());
-            }
-
-            if (discountable) {
-                break;
-            }
-        }
+        boolean discountable = movie.isDiscountable(screening.getWhenScreened(), screening.getSequence());
 
         Money fee;
 
