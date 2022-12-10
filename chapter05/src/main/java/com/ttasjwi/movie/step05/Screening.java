@@ -1,5 +1,7 @@
 package com.ttasjwi.movie.step05;
 
+import com.ttasjwi.money.Money;
+
 import java.time.LocalDateTime;
 
 public class Screening {
@@ -7,6 +9,14 @@ public class Screening {
     private Movie movie;
     private int sequence;
     private LocalDateTime whenScreened;
+
+    public Money calculateFee(int audienceCount) {
+        boolean discountable = movie.checkDiscountable(this);
+        if (discountable) {
+            return movie.calculateDiscountedFee().times(audienceCount);
+        }
+        return movie.getFee().times(audienceCount);
+    }
 
     public Movie getMovie() {
         return movie;
