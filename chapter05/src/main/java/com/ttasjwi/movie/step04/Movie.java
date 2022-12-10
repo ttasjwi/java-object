@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie {
+public abstract class Movie {
 
     private String title;
     private Duration runningTime;
@@ -14,9 +14,12 @@ public class Movie {
 
     private final List<DiscountCondition> discountConditions = new ArrayList<>();
 
-    private MovieType movieType;
-    private Money discountAmount;
-    private double discountPercent;
+    public Movie(String title, Duration runningTime, Money fee, DiscountCondition ... discountConditions) {
+        this.title = title;
+        this.runningTime = runningTime;
+        this.fee = fee;
+        this.discountConditions.addAll(List.of(discountConditions));
+    }
 
     public Money calculateMovieFee(Screening screening) {
         if (isDiscountable(screening)) {
@@ -30,24 +33,10 @@ public class Movie {
                 .anyMatch(condition -> condition.isSatisfiedBy(screening));
     }
 
-    private Money calculateDiscountAmount() {
-        return switch (movieType) {
-            case AMOUNT_DISCOUNT -> calculateAmountDiscountAmount();
-            case PERCENT_DISCOUNT -> calculatePercentDiscountAmount();
-            case NONE_DISCOUNT -> calculateNoneDiscountAmount();
-        };
+    protected Money getFee() {
+        return this.fee;
     }
 
-    private Money calculateAmountDiscountAmount() {
-        return discountAmount;
-    }
-
-    private Money calculatePercentDiscountAmount() {
-        return fee.times(discountPercent);
-    }
-
-    private Money calculateNoneDiscountAmount() {
-        return Money.ZERO;
-    }
+    protected abstract Money calculateDiscountAmount();
 
 }

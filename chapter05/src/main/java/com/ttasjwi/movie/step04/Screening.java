@@ -10,10 +10,6 @@ public class Screening {
     private int sequence;
     private LocalDateTime whenScreened;
 
-    private MovieType movieType;
-    private Money discountAmount;
-    private double discountPercent;
-
     public Reservation reserve(Customer customer, int audienceCount) {
         Money fee = calculateFee(audienceCount);
         return new Reservation(customer, this, fee, audienceCount);
