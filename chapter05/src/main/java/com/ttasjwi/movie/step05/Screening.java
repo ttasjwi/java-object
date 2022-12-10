@@ -11,11 +11,7 @@ public class Screening {
     private LocalDateTime whenScreened;
 
     public Money calculateFee(int audienceCount) {
-        boolean discountable = movie.checkDiscountable(this);
-        if (discountable) {
-            return movie.calculateDiscountedFee().times(audienceCount);
-        }
-        return movie.getFee().times(audienceCount);
+        return movie.calculateMovieFee(this).times(audienceCount);
     }
 
     public Movie getMovie() {
@@ -38,7 +34,4 @@ public class Screening {
         return whenScreened;
     }
 
-    public void setWhenScreened(LocalDateTime whenScreened) {
-        this.whenScreened = whenScreened;
-    }
 }
