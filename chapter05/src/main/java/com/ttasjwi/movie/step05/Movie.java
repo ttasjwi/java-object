@@ -16,6 +16,26 @@ public class Movie {
     private Money discountAmount;
     private double discountPercent;
 
+    public Money calculateDiscountedFee() {
+        return switch (movieType) {
+            case AMOUNT_DISCOUNT -> calculateAmountDiscountedFee();
+            case PERCENT_DISCOUNT -> calculatePercentDiscountedFee();
+            case NONE_DISCOUNT -> calculateNoneDiscountedFee();
+        };
+    }
+
+    private Money calculateAmountDiscountedFee() {
+        return discountAmount;
+    }
+
+    private Money calculatePercentDiscountedFee() {
+        return fee.times(discountPercent);
+    }
+
+    private Money calculateNoneDiscountedFee() {
+        return Money.ZERO;
+    }
+
     public boolean checkDiscountable(Screening screening) {
         return discountConditions
                 .stream()
