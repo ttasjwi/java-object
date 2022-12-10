@@ -27,21 +27,18 @@ public class ReservationAgency {
         return new Reservation(customer, screening, fee, audienceCount);
     }
 
-    private static boolean checkDiscountable(Screening screening) {
-        boolean discountable = false;
+    private boolean checkDiscountable(Screening screening) {
+        return screening.getMovie()
+                .getDiscountConditions()
+                .stream()
+                .anyMatch(condition -> isDiscountable(condition, screening));
+    }
 
-        for (DiscountCondition condition : screening.getMovie().getDiscountConditions()) {
-            if (condition.getType() == DiscountConditionType.PERIOD) {
-                discountable = isSatisfiedByPeriod(screening, condition);
-            } else {
-                discountable = isSatisfiedBySequence(screening, condition);
-            }
-
-            if (discountable) {
-                break;
-            }
+    private boolean isDiscountable(DiscountCondition condition, Screening screening) {
+        if (condition.getType() == DiscountConditionType.PERIOD) {
+            return isSatisfiedByPeriod(screening, condition);
         }
-        return discountable;
+        return isSatisfiedBySequence(screening, condition);
     }
 
     private static boolean isSatisfiedByPeriod(Screening screening, DiscountCondition condition) {
