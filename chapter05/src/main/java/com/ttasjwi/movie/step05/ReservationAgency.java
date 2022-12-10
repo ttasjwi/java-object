@@ -5,16 +5,9 @@ import com.ttasjwi.money.Money;
 public class ReservationAgency {
 
     public Reservation reserve(Screening screening, Customer customer, int audienceCount) {
-        boolean discountable = checkDiscountable(screening);
+        boolean discountable = screening.getMovie().checkDiscountable(screening);
         Money fee = calculateFee(screening, discountable, audienceCount);
         return new Reservation(customer, screening, fee, audienceCount);
-    }
-
-    private boolean checkDiscountable(Screening screening) {
-        return screening.getMovie()
-                .getDiscountConditions()
-                .stream()
-                .anyMatch(condition -> condition.isDiscountable(screening));
     }
 
     private Money calculateFee(Screening screening, boolean discountable, int audienceCount) {

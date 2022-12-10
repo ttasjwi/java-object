@@ -16,20 +16,18 @@ public class Movie {
     private Money discountAmount;
     private double discountPercent;
 
+    public boolean checkDiscountable(Screening screening) {
+        return discountConditions
+                .stream()
+                .anyMatch(condition -> condition.isDiscountable(screening));
+    }
+
     public Money getFee() {
         return fee;
     }
 
     public void setFee(Money fee) {
         this.fee = fee;
-    }
-
-    public List<DiscountCondition> getDiscountConditions() {
-        return discountConditions;
-    }
-
-    public void setDiscountConditions(List<DiscountCondition> discountConditions) {
-        this.discountConditions = discountConditions;
     }
 
     public MovieType getMovieType() {
