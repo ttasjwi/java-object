@@ -8,8 +8,8 @@ public class Audience {
         this.bag = bag;
     }
 
-    public Long setTicket(Ticket ticket) {
-        Long amount = bag.setTicket(ticket);
+    public Long buy(Ticket ticket) {
+        Long amount = bag.hold(ticket);
         return amount;
     }
 
