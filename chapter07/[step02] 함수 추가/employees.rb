@@ -26,4 +26,13 @@ def describeResult(name, pay)
   return "이름 : #{name}, 급여 : #{pay}"
 end
 
+# 모든 직원들의 기본급 반환
+def sumOfBasePays()
+  result = 0
+  for basePay in $basePays
+    result += basePay
+  end
+  puts(result)
+end
+
 main("직원A")
