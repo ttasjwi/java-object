@@ -2,10 +2,18 @@
 $employees = ["직원A", "직원B", "직원C"] # 직원
 $basePays = [400, 300, 250] # 기본 급여
 
-def main(name)
+def main(operation, args={})
+  case(operation)
+  when :pay then calculatePay(args[:name])
+  when :basePays then sumOfBasePays()
+  end
+end
+
+# 직원의 세후 급여를 반환
+def calculatePay(name)
   taxRate = getTaxRate() # 세율 입력
   pay = calculatePayFor(name, taxRate) # 최종 급여 계산
-  puts(describeResult(name, pay)) # 결과를 형식화하여 출력
+  puts(describeResult(name, pay))
 end
 
 # 세율을 입력하여 반환
@@ -35,4 +43,5 @@ def sumOfBasePays()
   puts(result)
 end
 
-main("직원A")
+main(:basePays)
+main(:pay, name:"직원A")
