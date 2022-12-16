@@ -1,50 +1,41 @@
 #encoding: UTF-8
-module Employees
-  $employees = ["직원A", "직원B", "직원C", "아르바이트D", "아르바이트E", "아르바이트F"] # 직원명
-  $basePays = [400, 300, 250, 1, 1, 1.5] # 기본 급여
-  $hourlys = [false, false, false, true, true, true] # 아르바이트 직원인지 여부
-  $timeCards = [0, 0, 0, 120, 120, 120] # 아르바이트 직원일 경우 시급
+
+Employee = Struct.new(:name, :basePay, :hourly, :timeCard) do
 
   # 직원의 세후 급여 계산
-  def Employees.calculatePay(name, taxRate)
-    if (Employees.hourly?(name)) then # 아르바이트 직원 여부 확인
-      pay = Employees.calculateHourlyPayFor(name, taxRate) # 아르바이트 직원 급여 계산
-    else
-      pay = Employees.calculatePayFor(name, taxRate) # 정직원 급여 계산
+  def calculatePay(taxRate)
+    if (hourly) then # 아르바이트 직원 여부 확인
+      return calculateHourlyPay(taxRate) # 아르바이트 직원 급여 계산
     end
-    return pay
+    return calculateSalariedPay(taxRate) # 정직원 급여 계산
   end
 
-  # 아르바이트 직원 여부 확인
-  def Employees.hourly?(name)
-    return $hourlys[$employees.index(name)]
+  def monthlyBasePay()
+    if (hourly) then return 0 end
+    return basePay
   end
 
+private
   # 정직원 급여 계산
-  def Employees.calculatePayFor(name, taxRate)
-    index = $employees.index(name) # 직원의 인덱스 획득
-    basePay = $basePays[index] # 직원의 기본 급여 획득
-    return basePay - (basePay * taxRate) # 직원의 급여 계산 후 반환
+  def calculateSalariedPay(taxRate)
+    return (basePay * timeCard) - (basePay * taxRate)
   end
 
   # 아르바이트 직원 급여 계산
-  def Employees.calculateHourlyPayFor(name, taxRate)
-    index = $employees.index(name)
-    basePay = $basePays[index] * $timeCards[index]
-    return basePay - (basePay * taxRate);
-  end
-
-  def Employees.sumOfBasePays()
-    result = 0
-    for name in $employees
-      if(not Employees.hourly?(name)) then
-        result += $basePays[$employees.index(name)]
-      end
-    end
-    return result
+  def calculateHourlyPay(taxRate)
+    return (basePay * timeCard) - (basePay * timeCard) * taxRate
   end
 
 end
+
+$employees = [
+  Employee.new("직원A", 400, false, 0),
+  Employee.new("직원B", 300, false, 0),
+  Employee.new("직원C", 250, false, 0),
+  Employee.new("아르바이트D", 1, true, 120),
+  Employee.new("아르바이트E", 1, true, 120),
+  Employee.new("아르바이트F", 1.5, true, 120),
+]
 
 def main(operation, args={})
   case(operation)
@@ -55,7 +46,10 @@ end
 
 def calculatePay(name)
   taxRate = getTaxRate()
-  pay = Employees.calculatePay(name, taxRate)
+  for each in $employees
+    if (each.name == name) then employee = each; break end
+  end
+  pay = employee.calculatePay(taxRate)
   puts(describeResult(name, pay))
 end
 
@@ -72,7 +66,11 @@ end
 
 # 모든 직원들의 기본급 출력
 def sumOfBasePays()
-  puts(Employees.sumOfBasePays())
+  result = 0
+  for each in $employees
+    result += each.monthlyBasePay()
+  end
+  puts(result)
 end
 
 main(:basePays)
