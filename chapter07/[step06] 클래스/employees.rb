@@ -1,40 +1,61 @@
 #encoding: UTF-8
 
-Employee = Struct.new(:name, :basePay, :hourly, :timeCard) do
+class Employee
+  attr_reader :name,:basePay
 
-  # 직원의 세후 급여 계산
+  def initialize(name, basePay)
+    @name = name
+    @basePay = basePay
+  end
+
   def calculatePay(taxRate)
-    if (hourly) then # 아르바이트 직원 여부 확인
-      return calculateHourlyPay(taxRate) # 아르바이트 직원 급여 계산
-    end
-    return calculateSalariedPay(taxRate) # 정직원 급여 계산
+    raise NotImplementedError
   end
 
   def monthlyBasePay()
-    if (hourly) then return 0 end
-    return basePay
-  end
-
-private
-  # 정직원 급여 계산
-  def calculateSalariedPay(taxRate)
-    return (basePay * timeCard) - (basePay * taxRate)
-  end
-
-  # 아르바이트 직원 급여 계산
-  def calculateHourlyPay(taxRate)
-    return (basePay * timeCard) - (basePay * timeCard) * taxRate
+    raise NotImplementedError
   end
 
 end
 
+class SalariedEmployee < Employee
+  def initialize(name, basePay)
+    super(name, basePay)
+  end
+
+  def calculatePay(taxRate)
+    return basePay - (basePay * taxRate)
+  end
+
+  def monthlyBasePay()
+    return basePay
+  end
+end
+
+class HourlyEmployee < Employee
+  attr_reader :timeCard
+  def initialize(name, basePay, timeCard)
+    super(name, basePay)
+    @timeCard = timeCard
+  end
+
+  def calculatePay(taxRate)
+    return (basePay * timeCard) - (basePay * timeCard) * taxRate
+  end
+
+  def monthlyBasePay()
+    return 0
+  end
+end
+
+
 $employees = [
-  Employee.new("직원A", 400, false, 0),
-  Employee.new("직원B", 300, false, 0),
-  Employee.new("직원C", 250, false, 0),
-  Employee.new("아르바이트D", 1, true, 120),
-  Employee.new("아르바이트E", 1, true, 120),
-  Employee.new("아르바이트F", 1.5, true, 120),
+  SalariedEmployee.new("직원A", 400),
+  SalariedEmployee.new("직원B", 300),
+  SalariedEmployee.new("직원C", 250),
+  HourlyEmployee.new("아르바이트D", 1, 120),
+  HourlyEmployee.new("아르바이트E", 1, 120),
+  HourlyEmployee.new("아르바이트F", 1.5, 120),
 ]
 
 def main(operation, args={})
