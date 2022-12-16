@@ -1,0 +1,67 @@
+#encoding: UTF-8
+$employees = ["직원A", "직원B", "직원C", "아르바이트D", "아르바이트E", "아르바이트F"] # 직원명
+$basePays = [400, 300, 250, 1, 1, 1.5] # 기본 급여
+$hourlys = [false, false, false, true, true, true] # 아르바이트 직원인지 여부
+$timeCards = [0, 0, 0, 120, 120, 120] # 아르바이트 직원일 경우 시급
+
+def main(operation, args={})
+  case(operation)
+  when :pay then calculatePay(args[:name])
+  when :basePays then sumOfBasePays()
+  end
+end
+
+# 직원의 세후 급여를 계산하여 출력
+def calculatePay(name)
+  taxRate = getTaxRate() # 세율 입력
+  if (hourly?(name)) then # 아르바이트 직원 여부 확인
+    pay = calculateHourlyPayFor(name, taxRate) # 아르바이트 직원 급여 계산
+  else
+    pay = calculatePayFor(name, taxRate) # 정직원 급여 계산
+  end
+  puts(describeResult(name, pay)) # 출력
+end
+
+# 세율을 입력하여 반환
+def getTaxRate()
+  print("세율을 입력하세요: ")
+  return gets().chomp().to_f()
+end
+
+# 아르바이트 직원 여부 확인
+def hourly?(name)
+  return $hourlys[$employees.index(name)]
+end
+
+# 정직원 급여 계산
+def calculatePayFor(name, taxRate)
+  index = $employees.index(name) # 직원의 인덱스 획득
+  basePay = $basePays[index] # 직원의 기본 급여 획득
+  return basePay - (basePay * taxRate) # 직원의 급여 계산 후 반환
+end
+
+# 아르바이트 직원 급여 계산
+def calculateHourlyPayFor(name, taxRate)
+  index = $employees.index(name)
+  basePay = $basePays[index] * $timeCards[index]
+  return basePay - (basePay * taxRate);
+end
+
+# 직원의 급여 계산 결과를 문자열로 변환
+def describeResult(name, pay)
+  return "이름 : #{name}, 급여 : #{pay}"
+end
+
+# 모든 직원들의 기본급 출력
+def sumOfBasePays()
+  result = 0
+  for name in $employees
+    if (not hourly?(name)) then
+      result += $basePays[$employees.index(name)]
+    end
+  end
+  puts(result)
+end
+
+main(:basePays)
+main(:pay, name:"아르바이트F")
