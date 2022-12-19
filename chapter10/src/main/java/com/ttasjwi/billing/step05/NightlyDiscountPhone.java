@@ -10,8 +10,9 @@ public class NightlyDiscountPhone extends Phone {
 
     private Money nightlyAmount;
 
-    public NightlyDiscountPhone(Money regularAmount, Money nightlyAmount, Duration seconds) {
-        super(regularAmount, seconds);
+    public NightlyDiscountPhone(Money regularAmount, Money nightlyAmount,
+                                Duration seconds, double taxRate) {
+        super(regularAmount, seconds, taxRate);
         this.nightlyAmount = nightlyAmount;
     }
 
@@ -27,7 +28,7 @@ public class NightlyDiscountPhone extends Phone {
                                 call.getDuration().getSeconds() / getSeconds().getSeconds()));
             }
         }
-        result.minus(nightlyFee); // 야간 요금으로 할인해야할 가격을 차감
-        return result;
+        nightlyFee = nightlyFee.plus(nightlyFee.times(getTaxRate()));
+        return result.minus(nightlyFee); // 야간 요금으로 할인해야할 가격을 차감
     }
 }
