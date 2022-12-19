@@ -10,11 +10,14 @@ public class Phone {
 
     private Money amount; // 단위 요금
     private Duration seconds; // 단위 시간
+    private double taxRate; // 세율
+
     private final List<Call> calls = new ArrayList<>();
 
-    public Phone(Money amount, Duration seconds) {
+    public Phone(Money amount, Duration seconds, double taxRate) {
         this.amount = amount;
         this.seconds = seconds;
+        this.taxRate = taxRate;
     }
 
     public void call(Call call) {
@@ -39,6 +42,8 @@ public class Phone {
         for (Call call : calls) {
             result = result.plus(amount.times(call.getDuration().getSeconds() / seconds.getSeconds()));
         }
+
+        result.plus(result.times(taxRate));
 
         return result;
     }
