@@ -27,7 +27,6 @@ public class NightlyDiscountPhone extends Phone {
                                 call.getDuration().getSeconds() / getSeconds().getSeconds()));
             }
         }
-        result.minus(nightlyFee); // 야간 요금으로 할인해야할 가격을 차감
-        return result;
+        return result.minus(nightlyFee); // 야간 요금으로 할인해야할 가격을 차감
     }
 }
