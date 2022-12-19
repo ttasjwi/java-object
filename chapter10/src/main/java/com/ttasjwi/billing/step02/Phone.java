@@ -43,8 +43,6 @@ public class Phone {
             result = result.plus(amount.times(call.getDuration().getSeconds() / seconds.getSeconds()));
         }
 
-        result.plus(result.times(taxRate));
-
-        return result;
+        return result.plus(result.times(taxRate));
     }
 }

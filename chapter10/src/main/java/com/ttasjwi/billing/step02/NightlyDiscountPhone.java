@@ -35,7 +35,6 @@ public class NightlyDiscountPhone {
             }
         }
 
-        result.minus(result.times(taxRate)); // 중복된 코드에서 양쪽을 수정할 떄, 한쪽에는 잘못 구현한 코드 -> 버그 발생 가능성
-        return result;
+        return result.minus(result.times(taxRate)); // 중복된 코드에서 양쪽을 수정할 떄, 한쪽에는 잘못 구현한 코드 -> 버그 발생 가능성
     }
 }
