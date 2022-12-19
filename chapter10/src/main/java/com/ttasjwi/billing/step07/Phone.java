@@ -2,19 +2,25 @@ package com.ttasjwi.billing.step07;
 
 import com.ttasjwi.money.Money;
 
-import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Phone extends AbstractPhone {
+public abstract class Phone {
 
-    private Money amount; // 단위 요금
-    private Duration seconds; // 단위 시간
+    private final List<Call> calls = new ArrayList<>();
 
-    public Phone(Money amount, Duration seconds) {
-        this.amount = amount;
-        this.seconds = seconds;
+    public void call(Call call) {
+        calls.add(call);
     }
 
-    protected Money calculateCallFee(Call call) {
-        return amount.times(call.getDuration().getSeconds() / seconds.getSeconds());
+    public Money calculateFee() {
+        Money result = Money.ZERO;
+
+        for (Call call : calls) {
+            result = result.plus(calculateCallFee(call));
+        }
+        return result;
     }
+
+    protected abstract Money calculateCallFee(Call call);
 }
