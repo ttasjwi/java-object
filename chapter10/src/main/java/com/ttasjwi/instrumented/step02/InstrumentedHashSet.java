@@ -15,8 +15,11 @@ public class InstrumentedHashSet<E> extends HashSet<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        addCount += c.size();
-        return super.addAll(c);
+        boolean modified = false;
+        for (E e : c)
+            if (add(e))
+                modified = true;
+        return modified;
     }
 
     public int getAddCount() {
