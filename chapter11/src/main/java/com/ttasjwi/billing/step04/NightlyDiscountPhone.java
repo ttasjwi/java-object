@@ -27,8 +27,4 @@ public class NightlyDiscountPhone extends Phone {
         }
     }
 
-    @Override
-    protected Money afterCalculated(Money fee) {
-        return fee;
-    }
 }
