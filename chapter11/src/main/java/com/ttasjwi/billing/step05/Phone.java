@@ -3,21 +3,24 @@ package com.ttasjwi.billing.step05;
 import com.ttasjwi.money.Money;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class Phone {
+public class Phone {
 
-    private List<Call> calls = new ArrayList<>();
+    private RatePolicy ratePolicy;
+    private final List<Call> calls = new ArrayList<>();
 
-    public Money calculateFee() {
-        Money result = Money.ZERO;
-
-        for(Call call : calls) {
-            result = result.plus(calculateCallFee(call));
-        }
-
-        return result;
+    public Phone(RatePolicy ratePolicy) {
+        this.ratePolicy = ratePolicy;
     }
 
-    abstract protected Money calculateCallFee(Call call);
+    public Money calculateFee() {
+        return ratePolicy.calculateFee(this);
+    }
+
+    public List<Call> getCalls() {
+        return Collections.unmodifiableList(calls);
+    }
+
 }
