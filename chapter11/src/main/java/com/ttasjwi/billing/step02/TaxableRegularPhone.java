@@ -4,11 +4,11 @@ import com.ttasjwi.money.Money;
 
 import java.time.Duration;
 
-public class TaxRegularPhone extends RegularPhone {
+public class TaxableRegularPhone extends RegularPhone {
 
     private double taxRate;
 
-    public TaxRegularPhone(Money amount, Duration seconds, double taxRate) {
+    public TaxableRegularPhone(Money amount, Duration seconds, double taxRate) {
         super(amount, seconds);
         this.taxRate = taxRate;
     }
