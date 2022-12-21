@@ -26,6 +26,12 @@ class GradeLectureTest {
         assertThat(stats).isEqualTo("Title: 객체지향 프로그래밍, Evaluation Method: Grade");
     }
 
+    public void exception() {
+        Lecture lecture = createGradeLecture();
+        // lecture.unknownMessage();
+        // 컴파일 에러 : self가 가리키는 객체의 class 참조를 통해 상속 계층을 따라가서 메시지를 처리할 수 있는 메서드가 없으므로 예외 발생
+    }
+
     private static GradeLecture createGradeLecture() {
         return new GradeLecture(
                 "객체지향 프로그래밍", 70,
