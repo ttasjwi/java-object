@@ -31,4 +31,8 @@ public class Movie {
 
         return fee.minus(discountPolicy.calculateDiscountAmount(screening));
     }
+
+    public LocalDateTime getEndTimeFrom(LocalDateTime whenStarted) {
+        return whenStarted.plus(runningTime);
+    }
 }
