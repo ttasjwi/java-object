@@ -4,7 +4,7 @@ import com.ttasjwi.money.Money;
 
 import java.time.Duration;
 
-public class RegularPolicy extends BasicRatePolicy {
+public class FixedFeePolicy extends BasicRatePolicy {
 
     private Money amount;
     private Duration seconds;
