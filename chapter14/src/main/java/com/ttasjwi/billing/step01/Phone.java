@@ -15,6 +15,10 @@ public class Phone {
         this.ratePolicy = ratePolicy;
     }
 
+    public void call(Call call) {
+        calls.add(call);
+    }
+
     public Money calculateFee() {
         return ratePolicy.calculateFee(this);
     }
