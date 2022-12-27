@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AdditionalRatePolicy implements RatePolicy {
 
-    protected RatePolicy next;
+    private RatePolicy next;
 
     public AdditionalRatePolicy(RatePolicy next) {
         changeNext(next);
@@ -38,6 +38,13 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
         assert next != null;
 
         return result;
+    }
+
+    protected void changNext(RateDiscountablePolicy next) {
+        this.next = next;
+
+        // 불변식
+        assert next != null;
     }
 
     abstract protected Money afterCalculated(Money fee);

@@ -24,7 +24,6 @@ public class Main {
         RateDiscountablePolicy policy = new RateDiscountablePolicy(
                 Money.wons(1000),
                 new RegularPolicy(Money.wons(100), Duration.ofSeconds(10)));
-        policy.changeNext(null); // 불변식 위반
-
+        policy.changeNext(null); // 불변식 위반으로부터 검증 예외가 발생
     }
 }
