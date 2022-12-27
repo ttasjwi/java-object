@@ -8,11 +8,8 @@ public abstract class BasicRatePolicy implements RatePolicy {
 
 	@Override
 	public Money calculateFee(List<Call> calls) {
-		// 완화된 사전조건
-		if (calls == null) {
-			return Money.ZERO;
-		}
-//
+		// 사전 조건
+		assert calls != null;
 //		// 더 강력한 사전조건
 //		assert !calls.isEmpty();
 

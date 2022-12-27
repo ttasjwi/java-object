@@ -24,8 +24,8 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
         Money fee = next.calculateFee(calls);
         Money result = afterCalculated(fee);
 
-        // 사후조건
-        assert result.isGreaterThanOrEqual(Money.ZERO);
+        // 사후조건 완화 -> 계약 위반 -> 리스코프 치환 원칙 위배
+        // assert result.isGreaterThanOrEqual(Money.ZERO);
 
         return result;
     }
