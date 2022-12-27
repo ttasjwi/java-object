@@ -13,7 +13,6 @@ public class Main {
 //         Phone regularPhone1 = new Phone(new RegularPolicy(Money.wons(10), Duration.ofSeconds(10)));
 //         regularPhone1.publishBill();
 
-
         // 사후조건 : 서버 측이 져야하는 의무
         Phone phone = new Phone(
                             new RateDiscountablePolicy(Money.wons(1000),
