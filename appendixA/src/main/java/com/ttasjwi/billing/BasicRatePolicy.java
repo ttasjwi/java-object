@@ -8,10 +8,9 @@ public abstract class BasicRatePolicy implements RatePolicy {
 
 	@Override
 	public Money calculateFee(List<Call> calls) {
-		// 사전 조건
-		assert calls != null;
-//		// 더 강력한 사전조건
-//		assert !calls.isEmpty();
+		if (calls == null || calls.isEmpty()) {
+			throw new NoneElementException(); // 클라이언트 입장에서 예상하지 못 한 예외 -> 가변성 규칙 위반 -> 리스코프 치환 원칙 위반
+		}
 
 		Money result = Money.ZERO;
 

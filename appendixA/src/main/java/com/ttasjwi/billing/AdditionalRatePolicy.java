@@ -24,6 +24,10 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
         // 불변식
         assert next != null;
 
+        if (calls == null || !calls.isEmpty()) {
+            throw new EmptyCallException();
+        }
+
         // 사전조건
         assert calls != null;
 
