@@ -11,6 +11,9 @@ public abstract class BasicRatePolicy implements RatePolicy {
 		// 사전조건
 		assert calls != null;
 
+		// 더 강력한 사전조건
+		assert !calls.isEmpty();
+
 		Money result = Money.ZERO;
 
 		for(Call call : calls) {
