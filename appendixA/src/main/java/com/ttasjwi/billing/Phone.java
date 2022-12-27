@@ -17,4 +17,10 @@ public class Phone {
     public void call(Call call) {
         calls.add(call);
     }
+
+    public Bill publishBill() {
+        Money fee = ratePolicy.calculateFee(calls);
+        return new Bill(this, fee);
+    }
+
 }

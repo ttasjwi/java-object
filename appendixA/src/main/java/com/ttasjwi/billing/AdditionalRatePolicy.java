@@ -18,8 +18,15 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
 
     @Override
     public Money calculateFee(List<Call> calls) {
+        // 사전조건
+        assert calls != null;
+
         Money fee = next.calculateFee(calls);
         Money result = afterCalculated(fee);
+
+        // 사후조건
+        assert result.isGreaterThanOrEqual(Money.ZERO);
+
         return result;
     }
 
