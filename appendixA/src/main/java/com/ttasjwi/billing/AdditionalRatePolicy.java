@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class AdditionalRatePolicy implements RatePolicy {
 
-    private RatePolicy next;
+    protected RatePolicy next;
 
     public AdditionalRatePolicy(RatePolicy next) {
         changeNext(next);
@@ -14,10 +14,16 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
 
     protected void changeNext(RatePolicy next) {
         this.next = next;
+
+        // 불변식
+        assert next != null;
     }
 
     @Override
     public Money calculateFee(List<Call> calls) {
+        // 불변식
+        assert next != null;
+
         // 사전조건
         assert calls != null;
 
@@ -26,7 +32,10 @@ public abstract class AdditionalRatePolicy implements RatePolicy {
 
         // 사후조건 완화 -> 계약 위반 -> 리스코프 치환 원칙 위배
         // 사후조건 강화 -> 계약 준수 -> 리스코프 치환 원칙 준수
-        assert result.isGreaterThanOrEqual(Money.wons(100));
+        assert result.isGreaterThanOrEqual(Money.wons(0));
+
+        // 불변식
+        assert next != null;
 
         return result;
     }

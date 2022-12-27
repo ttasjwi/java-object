@@ -15,4 +15,8 @@ public class RateDiscountablePolicy extends AdditionalRatePolicy {
 	protected Money afterCalculated(Money fee) {
 		return fee.minus(discountAmount);
 	}
+
+	public void changeNext(RatePolicy next) {
+		this.next = next;
+	}
 }

@@ -13,12 +13,18 @@ public class Main {
 //         Phone regularPhone1 = new Phone(new RegularPolicy(Money.wons(10), Duration.ofSeconds(10)));
 //         regularPhone1.publishBill();
 
-        // 사후조건 : 서버 측이 져야하는 의무
-        Phone phone = new Phone(
-                            new RateDiscountablePolicy(Money.wons(1000),
-                                new RegularPolicy(Money.wons(100), Duration.ofSeconds(10))));
-        phone.call(new Call(LocalDateTime.of(2017,1,1,10,10),
-                            LocalDateTime.of(2017,1,1,10,11)));
-        Bill bill = phone.publishBill();
+//        // 사후조건 : 서버 측이 져야하는 의무
+//        Phone phone = new Phone(
+//                            new RateDiscountablePolicy(Money.wons(1000),
+//                                new RegularPolicy(Money.wons(100), Duration.ofSeconds(10))));
+//        phone.call(new Call(LocalDateTime.of(2017,1,1,10,10),
+//                            LocalDateTime.of(2017,1,1,10,11)));
+//        Bill bill = phone.publishBill();
+
+        RateDiscountablePolicy policy = new RateDiscountablePolicy(
+                Money.wons(1000),
+                new RegularPolicy(Money.wons(100), Duration.ofSeconds(10)));
+        policy.changeNext(null); // 불변식 위반
+
     }
 }
