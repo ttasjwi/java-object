@@ -3,7 +3,7 @@ package com.ttasjwi.money;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Money {
+public class Money implements Ordered<Money> {
 
     public static final Money ZERO = Money.wons(0);
 
@@ -33,12 +33,9 @@ public class Money {
         return new Money(this.amount.multiply(BigDecimal.valueOf(percent)));
     }
 
-    public boolean isLessThan(Money other) {
-        return amount.compareTo(other.amount) < 0;
-    }
-
-    public boolean isGreaterThanOrEqual(Money other) {
-        return amount.compareTo(other.amount) >= 0;
+    @Override
+    public int compare(Money other) {
+        return this.amount.subtract(other.amount).intValue();
     }
 
     @Override
