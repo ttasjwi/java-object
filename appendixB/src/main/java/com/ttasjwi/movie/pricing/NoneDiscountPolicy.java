@@ -5,16 +5,18 @@ import com.ttasjwi.movie.DiscountCondition;
 import com.ttasjwi.movie.DiscountPolicy;
 import com.ttasjwi.movie.Screening;
 
+import java.util.Collections;
 import java.util.List;
 
-public class NoneDiscountPolicy extends DiscountPolicy {
+public class NoneDiscountPolicy implements DiscountPolicy {
 
-    public NoneDiscountPolicy(List<DiscountCondition> conditions) {
-        super(conditions);
+    @Override
+    public List<DiscountCondition> getConditions() {
+        return Collections.emptyList();
     }
 
     @Override
-    protected Money getDiscountAmount(Screening screening) {
+    public Money getDiscountAmount(Screening screening) {
         return Money.ZERO;
     }
 }
